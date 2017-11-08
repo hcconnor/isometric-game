@@ -1,3 +1,25 @@
+var canvas = document.getElementById("isometric-game");
+var context = canvas.getContext('2d');
+
+function printMousePos(event) {
+  console.log(
+    "clientX: " + event.clientX +
+    " - clientY: " + event.clientY);
+}
+
+document.addEventListener("click", printMousePos);
+
+
+function checkmove(x, y) {
+  if(world1.getTile(Math.floor(x/30),(Math.floor(y/30))) == 1 || world1.getTile((Math.ceil(x/30)),
+  (Math.floor(y/30))) == 1 || world1.getTile(Math.floor(x/30),(Math.ceil(y/30))) == 1 || world1.getTile(Math.ceil(x/30),(Math.ceil(y/30))) == 1) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+
 
 function collisionList(object, array) {
     for (var i = 0; i < array.length; i++) {
@@ -63,7 +85,5 @@ function SpriteSheet(url, frameWidth, frameHeight, frameSpeed) {
         var row = Math.floor(currentFrame / numFrames);
         var col = Math.floor(currentFrame % numFrames);
         context.drawImage(image, col * frameWidth, row * frameHeight, frameWidth, frameHeight, x, y, frameWidth, frameHeight);
-
     };
-
 }
