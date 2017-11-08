@@ -31,8 +31,65 @@ function World(map, width, height, tileSize){
             }
         }
     };
-    function dooropener(x,y,linkX,linkY){
-        this.doorLinkx = linkX;
-        this.doorLinky = y;
+}
+function Activator(x,y,width,height){
+    this.condition = false;
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.update = function(){
+        if(doesCollide(this,player)){
+            console.log("standing on switch");
+            this.condition = true;
+        }
+        else{
+            this.condition = false;
+        }
     }
+    this.draw = function(){
+        context.rect(this.x,this.y,this.width,this.height);
+        context.stroke();
+
+    }
+}
+
+function Door(x,y,width,height,activator)
+{
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.activator = activator;
+    this.update = function(){
+
+    }
+    this.draw = function(){
+        if(this.activator.condition == false){
+            context.fillStyle = 'black';
+            context.fillRect(this.x,this.y,this.width,this.height);
+            context.stroke();
+        }
+    }
+}
+
+function Clothes(x,y,width,height,activator,player,sprite)
+{
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.activator = activator;
+    this.player = player;
+    this.sprite = sprite;
+    this.update = function(){
+        if(this.activator.condition == true){
+            player.sheet = this.sprite;
+        }
+    };
+    this.draw = function(){
+        context.fillStyle = 'green';
+        context.fillRect(this.x,this.y,this.width,this.height);
+        context.stroke();
+    };
 }

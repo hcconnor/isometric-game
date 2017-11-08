@@ -4,7 +4,8 @@ var context = canvas.getContext('2d');
 function printMousePos(event) {
   console.log(
     "clientX: " + event.clientX +
-    " - clientY: " + event.clientY);
+    " - clientY: " + event.clientY + " mapX:"+ Math.floor(event.clientX/30)+ ", MapY: "+ (Math.floor(event.clientY/30)));
+
 }
 
 document.addEventListener("click", printMousePos);
@@ -47,8 +48,10 @@ function doesCollide(obj1, obj2) {
 }
 
 
-function SpriteSheet(url, frameWidth, frameHeight, frameSpeed) {
-    var image = new Image();
+function SpriteSheet(sprite, frameWidth, frameHeight, frameSpeed) {
+    this.image = sprite;
+    var image = sprite;
+    console.log(this.image);
     var numFrames;
 
     var currentFrame = 0;
@@ -56,10 +59,10 @@ function SpriteSheet(url, frameWidth, frameHeight, frameSpeed) {
     this.startFrame = 0;
     this.endFrame = 0;
     var animationL = this.endFrame - this.startFrame;
-    image.src = url;
 
     image.onload = function() {
         numFrames = Math.floor(image.width / frameWidth);
+        console.log(image.width);
     };
 
     this.setFrameRange = function(start, finish) {
@@ -70,6 +73,7 @@ function SpriteSheet(url, frameWidth, frameHeight, frameSpeed) {
     };
 
     this.update = function() {
+            console.log(this.image);
         if (counter == (frameSpeed - 1)) {
             if (currentFrame == this.endFrame) {
                 currentFrame = this.startFrame;
@@ -82,8 +86,9 @@ function SpriteSheet(url, frameWidth, frameHeight, frameSpeed) {
     };
 
     this.draw = function(x, y) {
+        //console.log(this.image)
         var row = Math.floor(currentFrame / numFrames);
         var col = Math.floor(currentFrame % numFrames);
-        context.drawImage(image, col * frameWidth, row * frameHeight, frameWidth, frameHeight, x, y, frameWidth, frameHeight);
+        context.drawImage(this.image, col * frameWidth, row * frameHeight, frameWidth, frameHeight, x, y, frameWidth, frameHeight);
     };
 }

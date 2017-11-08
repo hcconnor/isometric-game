@@ -1,4 +1,7 @@
-
+var player1Sprite = new Image();
+player1Sprite.src = "./assets/player.png";
+var player2Sprite = new Image();
+player2Sprite.src = "./assets/player2.png";
 
 //key codes for WASD
 var RIGHT_KEY_CODE = 68;
@@ -28,7 +31,7 @@ function keyUp(evt)
 		keysPressed[evt.keyCode] = false;
 }
 
-function Player(x,y,width,height)
+function Player(x,y,width,height,sheet)
 {
     this.width = width;
     this.height = height;
@@ -36,11 +39,14 @@ function Player(x,y,width,height)
     this.y = y;
     this.running = false;
     this.alive = true;
+    this.sheet = sheet;
     this.sprite = new
-    SpriteSheet('http://i.imgur.com/ttnYfak.png', this.width, this.height, 4);
+    SpriteSheet(this.sheet, this.width, this.height, 4);
     this.sprite.setFrameRange(1,5);
     this.update = function()
     {
+        this.sprite.image = this.sheet;
+        //console.log(this.sheet);
         // var dx = Math.cos(this.direction) * distance;
         // var dy = Math.sin(this.direction) * distance;
         // if (map.get(this.x + dx, this.y) <= 0) this.x += dx;
@@ -81,10 +87,10 @@ function Player(x,y,width,height)
 
 }
 var map1 = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-            1,0,1,0,0,1,0,0,0,0,0,0,0,0,1,
-            1,0,1,0,0,1,0,0,0,0,0,0,0,0,1,
-            1,0,1,0,0,1,0,0,0,0,0,0,0,0,1,
-            1,0,1,1,0,1,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,1,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,1,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,1,0,0,0,0,0,0,0,0,1,
+            1,1,1,1,0,1,0,0,0,0,0,0,0,0,1,
             1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
             1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
             1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -97,13 +103,20 @@ var map1 = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
             1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
 
 var world1 = new World(map1, 15, 15, 30);
-var player = new Player(200, canvas.height - 70, 24, 32, world1)
-
+var player = new Player(200, canvas.height - 70, 24, 32, player1Sprite);
+var dSwitch = new Activator(120,100,30,70);
+var door1 = new Door(120,120,30,30,dSwitch);
+var cSwitch = new Activator(62,65,32,32);
+var clothes1 = new Clothes(62,65,30,30,cSwitch,player,player2Sprite);
 
 
 function update(){
     world1.update();
     player.update();
+    door1.update();
+    dSwitch.update();
+    cSwitch.update();
+    clothes1.update();
 }
 
 function draw() {
@@ -112,7 +125,11 @@ function draw() {
     context.fillStyle = "#add8e6";
     context.fillRect(0, 0, canvas.width, canvas.height);
     world1.draw();
+    door1.draw();
+    cSwitch.draw();
+    clothes1.draw();
     player.draw();
+    dSwitch.draw();
 
 }
 
