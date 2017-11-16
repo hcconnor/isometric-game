@@ -1,5 +1,9 @@
 var canvas = document.getElementById("isometric-game");
 var context = canvas.getContext('2d');
+var canvas2 = document.getElementById("fog");
+var context2 = canvas2.getContext('2d');
+
+var overlay = 'rgba( 0, 0, 0, 1 )'
 
 function printMousePos(event) {
   console.log(
@@ -7,6 +11,10 @@ function printMousePos(event) {
     " - clientY: " + event.clientY + " mapX:"+ Math.floor(event.clientX/30)+ ", MapY: "+ (Math.floor(event.clientY/30)));
 
 }
+
+context2.fillStyle = overlay;
+context2.fillRect( 0, 0, 1280, 800 );
+
 
 document.addEventListener("click", printMousePos);
 
@@ -73,7 +81,7 @@ function SpriteSheet(sprite, frameWidth, frameHeight, frameSpeed) {
     };
 
     this.update = function() {
-            console.log(this.image);
+            //console.log(this.image);
         if (counter == (frameSpeed - 1)) {
             if (currentFrame == this.endFrame) {
                 currentFrame = this.startFrame;

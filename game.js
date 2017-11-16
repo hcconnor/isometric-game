@@ -10,6 +10,7 @@ var UP_KEY_CODE = 87;
 var DOWN_KEY_CODE = 83;
 
 
+
 var keysPressed = {};
 keysPressed[RIGHT_KEY_CODE] = false;
 keysPressed[LEFT_KEY_CODE] = false;
@@ -109,7 +110,8 @@ var door1 = new Door(120,120,30,30,dSwitch);
 var cSwitch = new Activator(62,65,32,32);
 var clothes1 = new Clothes(62,65,30,30,cSwitch,player,player2Sprite);
 
-
+var mouseX = 0;
+var mouseY =	0;
 function update(){
     world1.update();
     player.update();
@@ -118,6 +120,11 @@ function update(){
     cSwitch.update();
     clothes1.update();
 }
+
+$(document).mousemove(function(event){
+    mouseX = event.clientX;
+		mouseY = event.clientY;
+})
 
 function draw() {
     context.font = "30px Verdana";
@@ -130,7 +137,9 @@ function draw() {
     clothes1.draw();
     player.draw();
     dSwitch.draw();
-
+		context2.fillStyle = overlay;
+		context2.fillRect( 0, 0, 1280, 800 );
+		context2.clearRect(mouseX-50,mouseY-50,100,100);
 }
 
 
