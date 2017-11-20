@@ -100,3 +100,8 @@ function SpriteSheet(sprite, frameWidth, frameHeight, frameSpeed) {
         context.drawImage(this.image, col * frameWidth, row * frameHeight, frameWidth, frameHeight, x, y, frameWidth, frameHeight);
     };
 }
+
+function UI (x,y,img){
+    this.x = x;
+    this.y = y;
+}
