@@ -104,4 +104,8 @@ function SpriteSheet(sprite, frameWidth, frameHeight, frameSpeed) {
 function UI (x,y,img){
     this.x = x;
     this.y = y;
+    this.img = img;
+    this.draw = function(){
+        
+    }
 }

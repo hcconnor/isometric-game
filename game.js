@@ -4,6 +4,10 @@ var player2Sprite = new Image();
 player2Sprite.src = "./assets/player2.png";
 var fogmap = new Image();
 fogmap.src = "./assets/map.png";
+var camButImg = new Image();
+camButImg = "./assets/walltile"
+gui = new UI(0,450,)
+
 //key codes for WASD
 var RIGHT_KEY_CODE = 68;
 var LEFT_KEY_CODE = 65;
@@ -202,6 +206,7 @@ function draw() {
         context2.drawImage(fogmap, 0,0);
         //clear circle on mouse
 		context2.clearRect(mouseX-radius,mouseY-radius,100,100);
+    gui.draw();
 }
 
 
