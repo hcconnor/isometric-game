@@ -1,8 +1,10 @@
 var canvas = document.getElementById("isometric-game");
 var context = canvas.getContext('2d');
 var canvas2 = document.getElementById("fog");
-var context2 = canvas2.getContext('2d');
 
+//
+//var context2 = canvas2.getContext('2d');
+//
 var overlay = 'rgba( 0, 0, 0, 1 )'
 
 function printMousePos(event) {
@@ -17,6 +19,14 @@ context2.fillRect( 0, 0, 1280, 800 );
 
 
 document.addEventListener("click", printMousePos);
+
+function doClick(event){
+  if (checkBounds(camButton.x,camButton.y,event.clientX,event.clientY))
+  {
+    camButton.click();
+  }
+}
+
 
 
 function checkmove(x, y) {
@@ -101,11 +111,47 @@ function SpriteSheet(sprite, frameWidth, frameHeight, frameSpeed) {
     };
 }
 
-function UI (x,y,img){
+function checkBounds(x,y, mouseX, mouseY)
+{
+	if((mouseX < (x + 30)) && (mouseY < (y + 30)) && (mouseX > (x)) && (mouseY > (y)))
+  {
+  return true;
+  }
+
+  else
+  {
+  return false;
+  }
+}
+
+
+
+function Button(x,y,width){
+  this.x = x;
+  this.y = y;
+  this.width = width;
+  this.click = function(){
+    window.alert("wow");
+  }
+  this.update = function(){
+
+  }
+  this.draw = function(){
+    context.fillStyle = 'black';
+    context.fillRect(this.x,this.y,this.width,this.width);
+    context.stroke();
+  }
+}
+
+
+
+
+function UI(x,y,img){
     this.x = x;
     this.y = y;
     this.img = img;
     this.draw = function(){
-        
+        context.rect(this.x,this.y,210,80);
+        context.stroke();
     }
 }

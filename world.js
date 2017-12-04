@@ -53,6 +53,25 @@ function Activator(x,y,width,height){
 
     }
 }
+function winWin(x,y,width,height,activator)
+{
+  this.x = x;
+  this.y = y;
+  this.width = width;
+  this.height = height;
+  this.activator = activator;
+  this.update = function(){
+    if(this.activator.condition==true){
+      window.alert("you win");
+    }
+  }
+  this.draw = function(){
+      context.fillStyle= 'yellow';
+      context.fillRect(this.x,this.y,this.width,this.height);
+      context.stroke();
+  }
+}
+
 
 function Door(x,y,width,height,activator)
 {

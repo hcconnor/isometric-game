@@ -6,7 +6,8 @@ var fogmap = new Image();
 fogmap.src = "./assets/map.png";
 var camButImg = new Image();
 camButImg = "./assets/walltile"
-gui = new UI(0,450,)
+gui = new UI(0,450,);
+camButton = new Button(0,450,30)
 
 //key codes for WASD
 var RIGHT_KEY_CODE = 68;
@@ -149,28 +150,31 @@ function NPC(x,y,width,height,sheet)
 
 }
 
-var map1 = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-            1,0,0,0,0,1,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,1,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,1,0,0,0,0,0,0,0,0,1,
-            1,1,1,1,0,1,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+var map1 = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+            1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,
+            1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,
+            1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,
+            1,1,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,1,1,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,
+            1,1,1,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
 
-var world1 = new World(map1, 15, 15, 30);
+var world1 = new World(map1, 30, 15, 30);
 var player = new Player(200, canvas.height - 150, 24, 32, player1Sprite);
 var dSwitch = new Activator(120,100,30,70);
 var door1 = new Door(120,120,30,30,dSwitch);
 var cSwitch = new Activator(62,65,32,32);
 var clothes1 = new Clothes(62,65,30,30,cSwitch,player,player2Sprite);
+
+var winSwitch = new Activator(660,390,30,30);
+var winBox = new winWin(660,390,30,30,winSwitch);
 
 var mouseX = 0;
 var mouseY =	0;
@@ -181,6 +185,8 @@ function update(){
     dSwitch.update();
     cSwitch.update();
     clothes1.update();
+		winBox.update();
+		winSwitch.update();
 }
 
 $(document).mousemove(function(event){
@@ -200,13 +206,16 @@ function draw() {
     clothes1.draw();
     player.draw();
     dSwitch.draw();
-		context2.fillStyle = overlay;
+		winSwitch.draw();
+		winBox.draw();
+		//context2.fillStyle = overlay;
 		//context2.fillRect( 0, 0, 1280, 800 );
         //draw fake fog map
-        context2.drawImage(fogmap, 0,0);
+        //context2.drawImage(fogmap, 0,0);
         //clear circle on mouse
-		context2.clearRect(mouseX-radius,mouseY-radius,100,100);
+		//context2.clearRect(mouseX-radius,mouseY-radius,100,100);
     gui.draw();
+		camButton.draw();
 }
 
 
