@@ -62,7 +62,7 @@ function winWin(x,y,width,height,activator)
   this.activator = activator;
   this.update = function(){
     if(this.activator.condition==true){
-      window.alert("you win");
+      window.alert("Rebel wins!");
     }
   }
   this.draw = function(){

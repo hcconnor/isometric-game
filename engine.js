@@ -2,28 +2,31 @@ var canvas = document.getElementById("isometric-game");
 var context = canvas.getContext('2d');
 var canvas2 = document.getElementById("fog");
 
-//
-//var context2 = canvas2.getContext('2d');
-//
+var timer = 0;
+var camArray = [];
+var camMode = false;
+var context2 = canvas2.getContext('2d');
+
 var overlay = 'rgba( 0, 0, 0, 1 )'
 
-function printMousePos(event) {
-  console.log(
-    "clientX: " + event.clientX +
-    " - clientY: " + event.clientY + " mapX:"+ Math.floor(event.clientX/30)+ ", MapY: "+ (Math.floor(event.clientY/30)));
-
-}
 
 context2.fillStyle = overlay;
 context2.fillRect( 0, 0, 1280, 800 );
 
 
-document.addEventListener("click", printMousePos);
+document.addEventListener("click", doClick);
 
 function doClick(event){
-  if (checkBounds(camButton.x,camButton.y,event.clientX,event.clientY))
+  if (checkBounds(camButton.x,camButton.y,event.clientX,event.clientY,30,30))
   {
     camButton.click();
+  }
+  if (checkBounds(player.x,player.y,event.clientX,event.clientY,24,32)&&timer ==0)
+  {
+      alert("overlord wins!");
+  }
+  else {
+      timer = 300
   }
 }
 
@@ -104,16 +107,25 @@ function SpriteSheet(sprite, frameWidth, frameHeight, frameSpeed) {
     };
 
     this.draw = function(x, y) {
-        //console.log(this.image)
         var row = Math.floor(currentFrame / numFrames);
         var col = Math.floor(currentFrame % numFrames);
+
+        if (this.image.complete) {
+            context.drawImage(this.image, col * frameWidth, row * frameHeight, frameWidth, frameHeight, x, y, frameWidth, frameHeight);
+        } else {
+
+            this.image.onload = function () {
         context.drawImage(this.image, col * frameWidth, row * frameHeight, frameWidth, frameHeight, x, y, frameWidth, frameHeight);
+        };
+        }
+
+
     };
 }
 
-function checkBounds(x,y, mouseX, mouseY)
+function checkBounds(x,y, mouseX, mouseY, width, height)
 {
-	if((mouseX < (x + 30)) && (mouseY < (y + 30)) && (mouseX > (x)) && (mouseY > (y)))
+	if((mouseX < (x + width)) && (mouseY < (y + height)) && (mouseX > (x)) && (mouseY > (y)))
   {
   return true;
   }
@@ -131,7 +143,10 @@ function Button(x,y,width){
   this.y = y;
   this.width = width;
   this.click = function(){
-    window.alert("wow");
+    document.removeEventListener("click", doClick);
+    document.addEventListener("click", placeCam);
+    console.log("cam mode");
+    camMode = true;
   }
   this.update = function(){
 
@@ -143,8 +158,31 @@ function Button(x,y,width){
   }
 }
 
+function placeCam(){
+    cam = new Cam(mouseX -50 ,mouseY -50);
+    if(camArray.length >= 3)
+    {
+        camArray.shift();
+        camArray.push(cam);
+    }
+    else{
+        camArray.push(cam);
+    }
 
+    document.removeEventListener("click", placeCam);
+    document.addEventListener("click", doClick);
+    camMode = false;
+}
 
+function Cam(x,y){
+    this.x = x;
+    this.y = y;
+    this.draw = function(){
+        context2.clearRect(x,y,100,100);
+        context.fillStyle="black";
+        context.fillRect(this.x+45,this.y+45,10,10)
+    }
+}
 
 function UI(x,y,img){
     this.x = x;
