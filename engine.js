@@ -33,8 +33,8 @@ function doClick(event){
 
 
 function checkmove(x, y) {
-  if(world1.getTile(Math.floor(x/30),(Math.floor(y/30))) == 1 || world1.getTile((Math.ceil(x/30)),
-  (Math.floor(y/30))) == 1 || world1.getTile(Math.floor(x/30),(Math.ceil(y/30))) == 1 || world1.getTile(Math.ceil(x/30),(Math.ceil(y/30))) == 1) {
+  if(world1.getTile(Math.floor(x/30),(Math.floor(y/30))) !=0 || world1.getTile((Math.ceil(x/30)),
+  (Math.floor(y/30))) != 0 || world1.getTile(Math.floor(x/30),(Math.ceil(y/30))) != 0 || world1.getTile(Math.ceil(x/30),(Math.ceil(y/30))) != 0) {
     return false;
   } else {
     return true;

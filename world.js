@@ -1,9 +1,20 @@
 var width = canvas.width;
 var height = canvas.height;
 
-var stoneTile = new Image();
-stoneTile.src = "./assets/stonetile.png";
-
+var wallTile = new Image();
+wallTile.src = "./assets/walltile.png";
+var doorTile = new Image();
+doorTile.src = "./assets/doorwall1.png";
+var topTile1 = new Image();
+topTile1.src = "./assets/toptile1.png";
+var topTile2 = new Image();
+topTile2.src = "./assets/toptile2.png";
+var topTile3 = new Image();
+topTile3.src = "./assets/toptile3.png";
+var windowTile1 = new Image();
+windowTile1.src = "./assets/windowwall1.png";
+var windowTile2 = new Image();
+windowTile2.src = "./assets/windowwall2.png";
 
 function World(map, width, height, tileSize){
     this.map = map;
@@ -24,14 +35,41 @@ function World(map, width, height, tileSize){
                 //console.log(c + "," + r)
                 var dTile = this.getTile(c,r);
                 //console.log(dTile);
-                if (dTile !== 0){
-                    context.drawImage(stoneTile, c*tileSize, r*tileSize, 30, 30);
+                if (dTile == 1){
+                    context.drawImage(wallTile, c*tileSize, r*tileSize, 30, 30);
+                    }
+                if (dTile == 2){
+                    context.drawImage(doorTile, c*tileSize, r*tileSize, 30, 30);
                     //console.log("DREW TILE")
+                    }
+                if (dTile == 2){
+                    context.drawImage(doorTile, c*tileSize, r*tileSize, 30, 30);
+                        //console.log("DREW TILE")
+                    }
+                if (dTile == 3){
+                    context.drawImage(topTile1, c*tileSize, r*tileSize, 30, 30);
+                    //console.log("DREW TILE")
+                    }
+                if (dTile == 4){
+                    context.drawImage(topTile2, c*tileSize, r*tileSize, 30, 30);
+                        //console.log("DREW TILE")
+                    }
+                if (dTile == 5){
+                    context.drawImage(topTile3, c*tileSize, r*tileSize, 30, 30);
+                            //console.log("DREW TILE")
+                    }
+                if (dTile == 6){
+                    context.drawImage(windowTile1, c*tileSize, r*tileSize, 30, 30);
+                                //console.log("DREW TILE")
+                        }
+                if (dTile == 7){
+                    context.drawImage(windowTile2, c*tileSize, r*tileSize, 30, 30);
+                                        //console.log("DREW TILE")
+                    }
                 }
             }
         }
     };
-}
 function Activator(x,y,width,height){
     this.condition = false;
     this.x = x;
